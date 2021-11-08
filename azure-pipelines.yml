@@ -5,6 +5,8 @@
 
 trigger: none
 
+name: StartImageBuilderTemplate
+
 variables:
   resourceGroupName: aib
   imageTemplateName: win-srv-2k19
