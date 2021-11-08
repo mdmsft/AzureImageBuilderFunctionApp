@@ -11,8 +11,7 @@ variables:
   resourceGroupName: aib
   imageTemplateName: win-srv-2k19
 
-pool:
-  vmImage: Windows
+pool: Windows
 
 steps:
 - task: AzureResourceManagerTemplateDeployment@3
