@@ -1,0 +1,25 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger: none
+
+name: RemoveImageBuilderTemplate
+
+variables:
+  resourceGroupName: aib
+  imageTemplateName: win-srv-2k19
+
+pool:
+  vmImage: windows-latest
+
+steps:
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: 'Install-Module -name Az.ImageBuilder -Force -Scope CurrentUser'
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: 'Remove-AzImageBuilderTemplate -ResourceGroupName $(resourceGroupName) -ImageTemplateName $(imageTemplateName) -NoWait'
