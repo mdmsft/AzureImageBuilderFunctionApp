@@ -12,7 +12,7 @@ variables:
   imageTemplateName: win-srv-2k19
 
 pool:
-  vmImage: windows-latest
+  vmImage: ubuntu-latest
 
 steps:
 - task: AzureResourceManagerTemplateDeployment@3
