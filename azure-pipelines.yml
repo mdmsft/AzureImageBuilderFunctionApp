@@ -1,0 +1,34 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger: none
+
+variables:
+  resourceGroupName: aib
+  imageTemplateName: win-srv-2k19
+
+pool:
+  vmImage: windows-latest
+
+steps:
+- task: AzureResourceManagerTemplateDeployment@3
+  inputs:
+    deploymentScope: 'Resource Group'
+    azureResourceManagerConnection: 'TIMEmSYSTEM'
+    subscriptionId: '03f5c3d1-5c84-47c3-a985-9a0dfacb9f06'
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: '$(resourceGroupName)'
+    location: 'West Europe'
+    templateLocation: 'Linked artifact'
+    csmFile: './main.bicep'
+    deploymentMode: 'Incremental'
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: 'Install-Module -name Az.ImageBuilder -Force -Scope CurrentUser'
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: 'Start-AzImageBuilderTemplate -ResourceGroupName $(resourceGroupName) -Name $(imageTemplateName) -NoWait'
